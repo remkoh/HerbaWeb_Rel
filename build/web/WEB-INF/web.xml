@@ -24,6 +24,10 @@
         <servlet-name>productcreateServlet</servlet-name>
         <servlet-class>Servlets.productcreateServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>customerServlet</servlet-name>
+        <servlet-class>Servlets.Customer.customerServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
         <url-pattern>/loginServlet</url-pattern>
@@ -43,6 +47,10 @@
     <servlet-mapping>
         <servlet-name>productcreateServlet</servlet-name>
         <url-pattern>/productcreateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>customerServlet</servlet-name>
+        <url-pattern>/customerServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -25,7 +25,7 @@
                                 if (loggedOn.equals("1")) {
                         %>
                         <li><a href="productServlet">Overzicht producten</a></li>
-                        <li><a href="klantServlet">Overzicht klanten</a></li>
+                        <li><a href="customerServlet?action=overview">Overzicht klanten</a></li>
                         <li><a href="weging/weging.jsp">Ingave Weging</a></li>
 
                         <% } else {%>
