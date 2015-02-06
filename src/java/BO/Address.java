@@ -52,8 +52,6 @@ public class Address implements Serializable {
     @ManyToOne
     private Domicile woonplaatsidId;
     @OneToMany(mappedBy = "addressidId")
-    private List<User> userList;
-    @OneToMany(mappedBy = "addressidId")
     private List<Customer> customerList;
 
     public Address() {
@@ -93,15 +91,6 @@ public class Address implements Serializable {
 
     public void setWoonplaatsidId(Domicile woonplaatsidId) {
         this.woonplaatsidId = woonplaatsidId;
-    }
-
-    @XmlTransient
-    public List<User> getUserList() {
-        return userList;
-    }
-
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
     }
 
     @XmlTransient

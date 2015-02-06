@@ -17,6 +17,7 @@ import Services.CustomerService;
 import Services.DomicileService;
 import java.util.List;
 import BO.Address;
+import Services.AddressService;
 import org.jboss.weld.servlet.SessionHolder;
 
 /**
@@ -63,6 +64,7 @@ public class customerServlet extends HttpServlet {
         
         if (action.equals("creation")) {
             DomicileService ds = new DomicileService();
+            AddressService as = new AddressService();
             
             Customer cust = new Customer();
             Address custAdd = new Address();
@@ -79,14 +81,32 @@ public class customerServlet extends HttpServlet {
             cust.setEmail(request.getParameter("customerEmail"));
             cust.setLengte(custLengte);
             cust.setAddressidId(custAdd);
-            cs.saveCust(cust);
+            boolean addSaveOK = as.saveAdd(custAdd);
+            if (addSaveOK == true) {
+                cs.saveCust(cust);
+            }
             
-            request.getSession().setAttribute("saveCust", cust);
+//            request.getSession().setAttribute("saveCust", cust);
+//            
+//            dispatcher = request.getRequestDispatcher("customer/debug.jsp");
+//            dispatcher.forward(request, response);
             
-            dispatcher = request.getRequestDispatcher("customer/debug.jsp");
+            dispatcher = request.getRequestDispatcher("customerServlet?action=overview");
             dispatcher.forward(request, response);
             
         }
+        if (action.equals("details")) { 
+            Long custID = Long.parseLong(request.getParameter("id"));
+            Customer detailCust = cs.getByID(custID);
+            
+            request.getSession().setAttribute("detailCust", detailCust);
+            
+            dispatcher = request.getRequestDispatcher("customer/customerdetails.jsp");
+            dispatcher.forward(request, response);
+            
+
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

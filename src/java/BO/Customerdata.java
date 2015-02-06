@@ -7,21 +7,20 @@ package BO;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,17 +31,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Customerdata.findAll", query = "SELECT c FROM Customerdata c"),
-    @NamedQuery(name = "Customerdata.findById", query = "SELECT c FROM Customerdata c WHERE c.id = :id"),
-    @NamedQuery(name = "Customerdata.findByBmi", query = "SELECT c FROM Customerdata c WHERE c.bmi = :bmi"),
-    @NamedQuery(name = "Customerdata.findByBonemass", query = "SELECT c FROM Customerdata c WHERE c.bonemass = :bonemass"),
-    @NamedQuery(name = "Customerdata.findByCkalrest", query = "SELECT c FROM Customerdata c WHERE c.ckalrest = :ckalrest"),
-    @NamedQuery(name = "Customerdata.findByFattymass", query = "SELECT c FROM Customerdata c WHERE c.fattymass = :fattymass"),
-    @NamedQuery(name = "Customerdata.findByMetabolicage", query = "SELECT c FROM Customerdata c WHERE c.metabolicage = :metabolicage"),
-    @NamedQuery(name = "Customerdata.findByMusclemass", query = "SELECT c FROM Customerdata c WHERE c.musclemass = :musclemass"),
-    @NamedQuery(name = "Customerdata.findByVisceralfat", query = "SELECT c FROM Customerdata c WHERE c.visceralfat = :visceralfat"),
-    @NamedQuery(name = "Customerdata.findByWaterpercentage", query = "SELECT c FROM Customerdata c WHERE c.waterpercentage = :waterpercentage"),
-    @NamedQuery(name = "Customerdata.findByWeighingdate", query = "SELECT c FROM Customerdata c WHERE c.weighingdate = :weighingdate"),
-    @NamedQuery(name = "Customerdata.findByWeight", query = "SELECT c FROM Customerdata c WHERE c.weight = :weight")})
+    @NamedQuery(name = "Customerdata.findById", query = "SELECT c FROM Customerdata c WHERE c.id = :id")})
+
 public class Customerdata implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -72,8 +62,9 @@ public class Customerdata implements Serializable {
     private Date weighingdate;
     @Column(name = "WEIGHT")
     private Float weight;
-    @OneToMany(mappedBy = "customerdataidId")
-    private List<Customer> customerList;
+    @JoinColumn(name = "customerID", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Customer customerID;
 
     public Customerdata() {
     }
@@ -170,13 +161,12 @@ public class Customerdata implements Serializable {
         this.weight = weight;
     }
 
-    @XmlTransient
-    public List<Customer> getCustomerList() {
-        return customerList;
+    public Customer getCustomerID() {
+        return customerID;
     }
 
-    public void setCustomerList(List<Customer> customerList) {
-        this.customerList = customerList;
+    public void setCustomerID(Customer customerID) {
+        this.customerID = customerID;
     }
 
     @Override

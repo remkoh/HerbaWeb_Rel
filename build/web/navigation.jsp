@@ -8,6 +8,9 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="bootstrap-datepicker.js"></script>
+<link rel="stylesheet" href="datepicker.css"
 <%
     String firstrun = session.getAttribute("firstRun").toString();
     String loggedOn = session.getAttribute("loggedOn").toString();

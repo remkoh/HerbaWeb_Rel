@@ -22,7 +22,7 @@ public class CustomerService {
     private static EntityManager em;
     
     public CustomerService() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("HerbDerpPU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("HerbaWeb_RelPU");
         em = emf.createEntityManager();
     }
     

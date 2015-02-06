@@ -22,7 +22,7 @@ public class TaxrateService {
     private static EntityManager em;
 
     public TaxrateService() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("HerbDerpPU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("HerbaWeb_RelPU");
         em = emf.createEntityManager();
     }
 

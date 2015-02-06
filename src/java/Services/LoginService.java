@@ -20,7 +20,7 @@ public class LoginService {
     private static EntityManager em;
 
     public LoginService() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("HerbDerpPU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("HerbaWeb_RelPU");
         em = emf.createEntityManager();
     }
 

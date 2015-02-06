@@ -21,7 +21,7 @@ public class ProdCatService {
     private static EntityManager em;
 
     public ProdCatService() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("HerbDerpPU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("HerbaWeb_RelPU");
         em = emf.createEntityManager();
     }
     

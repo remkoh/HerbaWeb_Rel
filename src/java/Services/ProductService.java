@@ -22,7 +22,7 @@ public class ProductService {
     private static EntityManager em;
 
     public ProductService() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("HerbDerpPU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("HerbaWeb_RelPU");
         em = emf.createEntityManager();
     }
 

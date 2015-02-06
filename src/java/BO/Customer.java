@@ -6,7 +6,9 @@
 package BO;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,9 +18,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,7 +38,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Customer.findByFirstname", query = "SELECT c FROM Customer c WHERE c.firstname = :firstname"),
     @NamedQuery(name = "Customer.findByLastname", query = "SELECT c FROM Customer c WHERE c.lastname = :lastname"),
     @NamedQuery(name = "Customer.findByLengte", query = "SELECT c FROM Customer c WHERE c.lengte = :lengte")})
-
 public class Customer implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -54,12 +57,11 @@ public class Customer implements Serializable {
     private String lastname;
     @Column(name = "LENGTE")
     private Integer lengte;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerID")
+    private List<Customerdata> customerdataList;
     @JoinColumn(name = "ADDRESSID_ID", referencedColumnName = "ID")
     @ManyToOne
     private Address addressidId;
-    @JoinColumn(name = "CUSTOMERDATAID_ID", referencedColumnName = "ID")
-    @ManyToOne
-    private Customerdata customerdataidId;
 
     public Customer() {
     }
@@ -108,20 +110,21 @@ public class Customer implements Serializable {
         this.lengte = lengte;
     }
 
+    @XmlTransient
+    public List<Customerdata> getCustomerdataList() {
+        return customerdataList;
+    }
+
+    public void setCustomerdataList(List<Customerdata> customerdataList) {
+        this.customerdataList = customerdataList;
+    }
+
     public Address getAddressidId() {
         return addressidId;
     }
 
     public void setAddressidId(Address addressidId) {
         this.addressidId = addressidId;
-    }
-
-    public Customerdata getCustomerdataidId() {
-        return customerdataidId;
-    }
-
-    public void setCustomerdataidId(Customerdata customerdataidId) {
-        this.customerdataidId = customerdataidId;
     }
 
     @Override
