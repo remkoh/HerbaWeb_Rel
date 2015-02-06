@@ -51,14 +51,14 @@
                     <label for="productCategory">Categorie:</label>
                     <select class="form-control" name="productCategory" required data-fv-notempty-message="This field is required">
                         <% for (Productcategory Pcat : alleCategorien) {%>
-                        <option> <%=Pcat%> <% }%></option>
+                        <option> <%=Pcat.getProductcategoryname() %> <% }%></option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="productLine">Line:</label>
                     <select class="form-control" name="productLine" required data-fv-notempty-message="This field is required">
                         <% for (Productline Pline : alleLijnen) { %>
-                        <option> <%= Pline %> <% } %></option>
+                        <option> <%= Pline.getLinename() %> <% } %></option>
                     </select>
                 </div>
                 <div >

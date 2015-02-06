@@ -28,6 +28,10 @@
         <servlet-name>customerServlet</servlet-name>
         <servlet-class>Servlets.Customer.customerServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>wegingServlet</servlet-name>
+        <servlet-class>Servlets.wegingServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
         <url-pattern>/loginServlet</url-pattern>
@@ -51,6 +55,10 @@
     <servlet-mapping>
         <servlet-name>customerServlet</servlet-name>
         <url-pattern>/customerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>wegingServlet</servlet-name>
+        <url-pattern>/wegingServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

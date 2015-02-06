@@ -6,6 +6,7 @@
 package Servlets.Customer;
 
 import BO.Customer;
+import BO.Domicile;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,7 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Services.CustomerService;
+import Services.DomicileService;
 import java.util.List;
+import BO.Address;
+import org.jboss.weld.servlet.SessionHolder;
 
 /**
  *
@@ -33,20 +37,55 @@ public class customerServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String action = request.getParameter("action").toString();
         RequestDispatcher dispatcher;
         CustomerService cs = new CustomerService();
-        
-        
+
         if (action.equals("overview")) {
             List<Customer> allCustomers = cs.getAllCustomers();
             request.getSession().setAttribute("allCustomers", allCustomers);
-            
+
             dispatcher = request.getRequestDispatcher("customer/customeroverzicht.jsp");
             dispatcher.forward(request, response);
-            
 
+        }
+
+        if (action.equals("create")) {
+            DomicileService ds = new DomicileService();
+
+            List<Domicile> domicilies = ds.getAll();
+            request.getSession().setAttribute("domcilies", domicilies);
+
+            dispatcher = request.getRequestDispatcher("customer/customercreate.jsp");
+            dispatcher.forward(request, response);
+        }
+        
+        if (action.equals("creation")) {
+            DomicileService ds = new DomicileService();
+            
+            Customer cust = new Customer();
+            Address custAdd = new Address();
+            Long domID = Long.parseLong(request.getParameter("customerAddressDomcile"));
+            Domicile custDom = ds.getByID(domID);
+            int custLengte = Integer.parseInt(request.getParameter("customerHeight"));
+            
+            custAdd.setStreet(request.getParameter("customerAddressStraat"));
+            custAdd.setNumber(request.getParameter("customerAddressNummer"));
+            custAdd.setWoonplaatsidId(custDom);
+            
+            cust.setFirstname(request.getParameter("customerFirstname"));
+            cust.setLastname(request.getParameter("customerLastname"));
+            cust.setEmail(request.getParameter("customerEmail"));
+            cust.setLengte(custLengte);
+            cust.setAddressidId(custAdd);
+            cs.saveCust(cust);
+            
+            request.getSession().setAttribute("saveCust", cust);
+            
+            dispatcher = request.getRequestDispatcher("customer/debug.jsp");
+            dispatcher.forward(request, response);
+            
         }
     }
 

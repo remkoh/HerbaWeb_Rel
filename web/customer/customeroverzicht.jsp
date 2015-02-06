@@ -34,29 +34,29 @@
                     <th></th>
                     <th></th>
                 </tr>
-                <% for (Customer cust : customers) { %>
+                <% for (Customer cust : customers) {%>
                 <tr>
-                    <td><%= cust.getFirstname() %></td>
-                    <td><%= cust.getLastname() %></td>
-                    <td><%= cust.getEmail() %></td>
-                    <td><%= cust.getAddressidId().getWoonplaatsidId().getCity() %></td>
+                    <td><%= cust.getFirstname()%></td>
+                    <td><%= cust.getLastname()%></td>
+                    <td><%= cust.getEmail()%></td>
+                    <td><%= cust.getAddressidId().getWoonplaatsidId().getCity()%></td>
                     <td><a href="customerServlet?action=details&id=<%=cust.getId()%>"><span class="glyphicon glyphicon-search"></span></a></td>
                     <td><a href="customerServlet?action=delete&id=<%=cust.getId()%>"><span class="glyphicon glyphicon-remove"></span></a></td>
                     <td><a href="customerServlet?action=edit&id=<%=cust.getId()%>"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                        
+
                 </tr>
-                <% } %>
+                <% }%>
             </table>
             <br />
             <br />
-            <a href="productcreateServlet?action=load"><button type="button" class="btn btn-primary btn-lg">Nieuw Product</button></a>
-            
+            <a href="customerServlet?action=create"><button type="button" class="btn btn-primary btn-lg">Nieuwe Klant</button></a>
+
         </div>
         <br />
-        
+
         <div class="col-md-2"></div>
         <br />
 
-        
+
     </body>
 </html>

@@ -55,7 +55,7 @@
                     <label for="productCategory">Categorie:</label>
                     <select class="form-control" name="productCategory">
                         <% for (Productcategory Pcat : alleCategorien) {%>
-                        <option <% if (Pcat.getProductcategoryname().equals(editProduct.getProductcategoryidId().getProductcategoryname())) {%> selected value="<%= Pcat%>" <% }%> > <%=Pcat%></option>
+                        <option <% if (Pcat.getProductcategoryname().equals(editProduct.getProductcategoryidId().getProductcategoryname())) {%> selected value="<%= Pcat %>" <% }%> > <%=Pcat %></option>
                         <% } %>
                     </select>
                 </div>
@@ -63,7 +63,7 @@
                     <label for="productLine">Line:</label>
                     <select class="form-control" name="productLine">
                         <% for (Productline Pline : alleLijnen) {%>
-                        <option <% if (Pline.getLinename().equals(editProduct.getProductlineidId().getLinename())) {%> selected value="<%= Pline%>" <% }%> ><%=Pline%></option>
+                        <option <% if (Pline.getLinename().equals(editProduct.getProductlineidId().getLinename())) {%> selected value="<%= Pline %>" <% }%> ><%=Pline%></option>
                         <% }%>
                     </select>
                 </div>
