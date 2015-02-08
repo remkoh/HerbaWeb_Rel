@@ -65,7 +65,7 @@ public class CustomerService {
         try {
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
-            Query q = em.createQuery("DELETE FROM Customer WHERE c.id = :id");
+            Query q = em.createQuery("DELETE From Customer c WHERE c.id = :id");
             q.setParameter("id", custID);
             q.executeUpdate();
             transaction.commit();

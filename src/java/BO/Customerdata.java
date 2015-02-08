@@ -31,9 +31,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Customerdata.findAll", query = "SELECT c FROM Customerdata c"),
-    @NamedQuery(name = "Customerdata.findById", query = "SELECT c FROM Customerdata c WHERE c.id = :id")})
+    @NamedQuery(name = "Customerdata.findById", query = "SELECT c FROM Customerdata c WHERE c.id = :id"),
+    @NamedQuery(name = "Customerdata.findByCustId", query = "SELECT c FROM Customerdata c WHERE c.customerID = :cid")})
 
-public class Customerdata implements Serializable {
+public class Customerdata implements Serializable, Comparable<Customerdata> {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -192,6 +193,12 @@ public class Customerdata implements Serializable {
     @Override
     public String toString() {
         return "BO.Customerdata[ id=" + id + " ]";
+    }
+
+    @Override
+    public int compareTo(Customerdata o) {
+        int last = this.weighingdate.compareTo(o.weighingdate);
+        return last == 0 ? this.weighingdate.compareTo(o.weighingdate) : last;
     }
     
 }

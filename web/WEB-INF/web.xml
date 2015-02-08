@@ -32,6 +32,18 @@
         <servlet-name>wegingServlet</servlet-name>
         <servlet-class>Servlets.wegingServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>customerDelete</servlet-name>
+        <servlet-class>Servlets.Customer.customerDelete</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>customerEditServlet</servlet-name>
+        <servlet-class>Servlets.Customer.customerEditServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>homeServlet</servlet-name>
+        <servlet-class>Servlets.homeServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
         <url-pattern>/loginServlet</url-pattern>
@@ -59,6 +71,18 @@
     <servlet-mapping>
         <servlet-name>wegingServlet</servlet-name>
         <url-pattern>/wegingServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>customerDelete</servlet-name>
+        <url-pattern>/customerDelete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>customerEditServlet</servlet-name>
+        <url-pattern>/customerEditServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>homeServlet</servlet-name>
+        <url-pattern>/homeServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

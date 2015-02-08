@@ -19,7 +19,7 @@
 %>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
         <title>Edit: <%= editProduct.getProductname()%> </title>
     </head>
     <body>
@@ -76,6 +76,6 @@
 
         </div>
         <div class="col-md-2"></div>
-
+        <%@include file="../footer.jsp" %>
     </body>
 </html>

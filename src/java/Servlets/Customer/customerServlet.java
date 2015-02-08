@@ -17,8 +17,12 @@ import Services.CustomerService;
 import Services.DomicileService;
 import java.util.List;
 import BO.Address;
+import BO.Customerdata;
 import Services.AddressService;
-import org.jboss.weld.servlet.SessionHolder;
+import Services.CustomerdataService;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -61,21 +65,22 @@ public class customerServlet extends HttpServlet {
             dispatcher = request.getRequestDispatcher("customer/customercreate.jsp");
             dispatcher.forward(request, response);
         }
-        
-        if (action.equals("creation")) {
+
+        if (action.equals("edit")) {
             DomicileService ds = new DomicileService();
             AddressService as = new AddressService();
-            
-            Customer cust = new Customer();
+
+            Customer cust = cs.getByID(Long.parseLong(request.getParameter("Customerid")));
+
             Address custAdd = new Address();
             Long domID = Long.parseLong(request.getParameter("customerAddressDomcile"));
             Domicile custDom = ds.getByID(domID);
             int custLengte = Integer.parseInt(request.getParameter("customerHeight"));
-            
+
             custAdd.setStreet(request.getParameter("customerAddressStraat"));
             custAdd.setNumber(request.getParameter("customerAddressNummer"));
             custAdd.setWoonplaatsidId(custDom);
-            
+
             cust.setFirstname(request.getParameter("customerFirstname"));
             cust.setLastname(request.getParameter("customerLastname"));
             cust.setEmail(request.getParameter("customerEmail"));
@@ -85,28 +90,147 @@ public class customerServlet extends HttpServlet {
             if (addSaveOK == true) {
                 cs.saveCust(cust);
             }
-            
+
+            dispatcher = request.getRequestDispatcher("customerServlet?action=overview");
+            dispatcher.forward(request, response);
+        }
+
+        if (action.equals("creation")) {
+            DomicileService ds = new DomicileService();
+            AddressService as = new AddressService();
+
+            Customer cust = new Customer();
+            Address custAdd = new Address();
+            Long domID = Long.parseLong(request.getParameter("customerAddressDomcile"));
+            Domicile custDom = ds.getByID(domID);
+            int custLengte = Integer.parseInt(request.getParameter("customerHeight"));
+
+            custAdd.setStreet(request.getParameter("customerAddressStraat"));
+            custAdd.setNumber(request.getParameter("customerAddressNummer"));
+            custAdd.setWoonplaatsidId(custDom);
+
+            cust.setFirstname(request.getParameter("customerFirstname"));
+            cust.setLastname(request.getParameter("customerLastname"));
+            cust.setEmail(request.getParameter("customerEmail"));
+            cust.setLengte(custLengte);
+            cust.setAddressidId(custAdd);
+            boolean addSaveOK = as.saveAdd(custAdd);
+            if (addSaveOK == true) {
+                cs.saveCust(cust);
+            }
+
 //            request.getSession().setAttribute("saveCust", cust);
 //            
 //            dispatcher = request.getRequestDispatcher("customer/debug.jsp");
 //            dispatcher.forward(request, response);
-            
             dispatcher = request.getRequestDispatcher("customerServlet?action=overview");
             dispatcher.forward(request, response);
-            
-        }
-        if (action.equals("details")) { 
-            Long custID = Long.parseLong(request.getParameter("id"));
-            Customer detailCust = cs.getByID(custID);
-            
-            request.getSession().setAttribute("detailCust", detailCust);
-            
-            dispatcher = request.getRequestDispatcher("customer/customerdetails.jsp");
-            dispatcher.forward(request, response);
-            
 
         }
-        
+        if (action.equals("details")) {
+            CustomerdataService cds = new CustomerdataService();
+            Long custID = Long.parseLong(request.getParameter("id"));
+            Customer detailCust = cs.getByID(custID);
+            List<Customerdata> cd = cds.getByCustID(detailCust);
+
+            request.getSession().setAttribute("detailCust", detailCust);
+            request.getSession().setAttribute("cdList", cd);
+
+            dispatcher = request.getRequestDispatcher("customer/customerdetails.jsp");
+            dispatcher.forward(request, response);
+
+        }
+
+        if (action.equals("newweging")) {
+            request.getSession().setAttribute("quickweging", "no");
+            dispatcher = request.getRequestDispatcher("customer/customerweging.jsp");
+            dispatcher.forward(request, response);
+        }
+
+        if (action.equals("quickweging")) {
+            request.getSession().setAttribute("quickweging", "yes");
+            dispatcher = request.getRequestDispatcher("customer/customerweging.jsp");
+            dispatcher.forward(request, response);
+        }
+
+        if (action.equals("delete")) {
+            Long delID = Long.parseLong(request.getParameter("id"));
+            cs.deleteCust(delID);
+            dispatcher = request.getRequestDispatcher("customerServlet?action=overview");
+            dispatcher.forward(request, response);
+
+        }
+
+        if (action.equals("newWeging")) {
+            CustomerdataService cds = new CustomerdataService();
+            Long csID = Long.parseLong(request.getParameter("customerID"));
+            Customer weegCust = cs.getByID(csID);
+            Customerdata cdata = new Customerdata();
+            //datum parsing
+            String datum = request.getParameter("custdetWeighDate");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date wegingsDatum;
+            try {
+                wegingsDatum = sdf.parse(datum);
+            } catch (ParseException ex) {
+                wegingsDatum = new Date();
+                System.out.println("Error: " + ex);
+            }
+
+            cdata.setBmi(Float.parseFloat(request.getParameter("custdetBMI")));
+            cdata.setBonemass(Float.parseFloat(request.getParameter("custdetBonemass")));
+            cdata.setCkalrest(Integer.parseInt(request.getParameter("custdetCkalRest")));
+            cdata.setFattymass(Float.parseFloat(request.getParameter("custdetFatty")));
+            cdata.setMetabolicage(Integer.parseInt(request.getParameter("custdetMetAge")));
+            cdata.setMusclemass(Float.parseFloat(request.getParameter("custdetMuscle")));
+            cdata.setWaterpercentage(Float.parseFloat(request.getParameter("custdetWater")));
+            cdata.setVisceralfat(Float.parseFloat(request.getParameter("custdetViscFat")));
+            cdata.setWeighingdate(wegingsDatum);
+            cdata.setWeight(Float.parseFloat(request.getParameter("custdetWeight")));
+            cdata.setCustomerID(weegCust);
+
+            //request.getSession().setAttribute("datum", datum);
+            cds.saveCustData(cdata);
+
+            dispatcher = request.getRequestDispatcher("customerServlet?action=overview");
+            dispatcher.forward(request, response);
+
+        }
+
+        if (action.equals("qWeging")) {
+            CustomerdataService cds = new CustomerdataService();
+            Long custID = Long.parseLong(request.getParameter("customerQuickID"));
+            Customer weegCust = cs.getByID(custID);
+            Customerdata cdata = new Customerdata();
+            //datum parsing
+            String datum = request.getParameter("custdetWeighDate");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date wegingsDatum;
+            try {
+                wegingsDatum = sdf.parse(datum);
+            } catch (ParseException ex) {
+                wegingsDatum = new Date();
+                System.out.println("Error: " + ex);
+            }
+
+            cdata.setBmi(Float.parseFloat(request.getParameter("custdetBMI")));
+            cdata.setBonemass(Float.parseFloat(request.getParameter("custdetBonemass")));
+            cdata.setCkalrest(Integer.parseInt(request.getParameter("custdetCkalRest")));
+            cdata.setFattymass(Float.parseFloat(request.getParameter("custdetFatty")));
+            cdata.setMetabolicage(Integer.parseInt(request.getParameter("custdetMetAge")));
+            cdata.setMusclemass(Float.parseFloat(request.getParameter("custdetMuscle")));
+            cdata.setWaterpercentage(Float.parseFloat(request.getParameter("custdetWater")));
+            cdata.setVisceralfat(Float.parseFloat(request.getParameter("custdetViscFat")));
+            cdata.setWeighingdate(wegingsDatum);
+            cdata.setWeight(Float.parseFloat(request.getParameter("custdetWeight")));
+            cdata.setCustomerID(weegCust);
+
+            cds.saveCustData(cdata);
+
+            dispatcher = request.getRequestDispatcher("customerServlet?action=overview");
+            dispatcher.forward(request, response);
+
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

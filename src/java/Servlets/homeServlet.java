@@ -6,20 +6,20 @@
 package Servlets;
 
 import Services.CustomerService;
+import Services.ProductService;
 import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Services.LoginService;
-import Services.ProductService;
-import javax.servlet.RequestDispatcher;
 
 /**
  *
  * @author Temp
  */
-public class loginServlet extends HttpServlet {
+public class homeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,42 +32,20 @@ public class loginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        CustomerService cs = new CustomerService();
 
-        LoginService ls = new LoginService();
-        BO.User matchUser = ls.getUserByEmail(request.getParameter("account"));
         RequestDispatcher dispatcher;
-        if (matchUser != null) {
-            String tomatchPwd = matchUser.getPassword();
-            String enteredPwd = request.getParameter("password");
-            if (tomatchPwd.equals(enteredPwd)) {
-                request.getSession().setAttribute("loggedOnUser", matchUser);
-                request.getSession().setAttribute("loggedOn", 1);
-                request.getSession().setAttribute("firstRun", "no");
-                
-                CustomerService cs = new CustomerService();
-                ProductService ps = new ProductService();
-                
-                int aantalProducten = ps.GetAllProducts().size();
-                int aantalKlanten = cs.getAllCustomers().size();
-                
-                request.getSession().setAttribute("numberofProducts", aantalProducten);
-                request.getSession().setAttribute("numberofCustomers", aantalKlanten);
-                
-                
-                dispatcher = request.getRequestDispatcher("loggedon.jsp");
-                dispatcher.forward(request, response);
-            } else {
-                dispatcher = request.getRequestDispatcher("badlogin.jsp");
-                dispatcher.forward(request, response);
-            }
-        } else {
-            dispatcher = request.getRequestDispatcher("badlogin.jsp");
-            dispatcher.forward(request, response);
+        ProductService ps = new ProductService();
 
-        }
-        
+        int aantalProducten = ps.GetAllProducts().size();
+        int aantalKlanten = cs.getAllCustomers().size();
 
+        request.getSession().setAttribute("numberofProducts", aantalProducten);
+        request.getSession().setAttribute("numberofCustomers", aantalKlanten);
 
+        dispatcher = request.getRequestDispatcher("loggedon.jsp");
+        dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

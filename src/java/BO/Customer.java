@@ -149,7 +149,7 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "BO.Customer[ id=" + id + " ]";
+        return this.getFirstname() + " " + this.getLastname();
     }
     
 }

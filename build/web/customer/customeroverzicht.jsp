@@ -4,6 +4,7 @@
     Author     : Temp
 --%>
 
+<%@page import="java.net.URLEncoder"%>
 <%@page import="BO.Customer"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.List"%>
@@ -40,9 +41,9 @@
                     <td><%= cust.getLastname()%></td>
                     <td><%= cust.getEmail()%></td>
                     <td><%= cust.getAddressidId().getWoonplaatsidId().getCity()%></td>
-                    <td><a href="customerServlet?action=details&id=<%=cust.getId()%>"><span class="glyphicon glyphicon-search"></span></a></td>
-                    <td><a href="customerServlet?action=delete&id=<%=cust.getId()%>"><span class="glyphicon glyphicon-remove"></span></a></td>
-                    <td><a href="customerServlet?action=edit&id=<%=cust.getId()%>"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                    <td><a href="customerServlet?action=details&id=<%=cust.getId()%>"><span class="glyphicon glyphicon-search"></span></a></td>   
+                    <td><a href="customerDelete?id=<%=cust.getId() %>" ><span class="glyphicon glyphicon-remove"></span></a></td>               
+                    <td><a href= "customerEditServlet?id=<%=cust.getId()%>"><span class="glyphicon glyphicon-pencil"></span></a></td>
 
                 </tr>
                 <% }%>
@@ -55,8 +56,6 @@
         <br />
 
         <div class="col-md-2"></div>
-        <br />
-
-
+        <%@include file="../footer.jsp" %>
     </body>
 </html>

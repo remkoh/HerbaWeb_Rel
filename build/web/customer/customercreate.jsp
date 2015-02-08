@@ -4,6 +4,7 @@
     Author     : Temp
 --%>
 
+<%@page import="BO.Customer"%>
 <%@page import="java.util.Comparator"%>
 <%@page import="java.util.Collections"%>
 <%@page import="java.util.List"%>
@@ -12,6 +13,7 @@
 
 <%
     List<Domicile> domicilies = (List<Domicile>) session.getAttribute("domcilies");
+    Customer editCust = (Customer)session.getAttribute("editCustomer");
 %>
 
 
@@ -34,7 +36,7 @@
         <form action="customerServlet?action=creation" class="form-horizontal" method="post">
             <div class="form-group">
                 <label  for="customerFirstname">Voornaam:</label>
-                <input type="text" class="form-control" name="customerFirstname" required data-fv-notempty-message="The username is required and cannot be empty">
+                <input type="text" class="form-control" name="customerFirstname" required data-fv-notempty-message="The username is required and cannot be empty" ">
             </div>
             <div class="form-group">
                 <label  for="customerLastname">Achternaam:</label>
@@ -82,4 +84,5 @@
 
 </div>
 <div class="col-md-2"></div>
+<%@include file="../footer.jsp" %>
 </html>

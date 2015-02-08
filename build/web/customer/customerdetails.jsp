@@ -4,6 +4,8 @@
     Author     : Temp
 --%>
 
+<%@page import="java.util.Comparator"%>
+<%@page import="java.util.Collections"%>
 <%@page import="java.sql.Date"%>
 <%@page import="org.eclipse.persistence.jpa.jpql.parser.DateTime"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -13,7 +15,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <% Customer detailCust = (Customer) session.getAttribute("detailCust"); %>
-<% List<Customerdata> wegingsdata = detailCust.getCustomerdataList();%>
+<% List<Customerdata> wegingsdata = (List<Customerdata>) session.getAttribute("cdList");%>
+<% Collections.sort(wegingsdata); %>
+<% SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY"); %>
 
 
 <!DOCTYPE html>
@@ -47,23 +51,27 @@
                     <td><%= detailCust.getLengte()%></td>
                 </tr>
             </table>
+            <% if (!wegingsdata.isEmpty()) { %>
             <div class="text-center"><h2>Wegingen:</h2></div>
             <br />
             <table class="table table-striped">
                 <tr>
+                    <th></th>
                     <th>Datum weging</th>
                     <th>Gewicht</th>
-                    <th>Water%</th>
+                    <th>Waterpercentage</th>
                     <th>Vetmassa</th>
                     <th>Spiermassa</th>
                     <th>Buikvet</th>
-                    <th>Metab.Leeftijd</th>
+                    <th>MetabolischeLeeftijd</th>
                     <th>Ckal in rust</th>
                     <th>BMI</th>
                 </tr>
+                
                 <% for (Customerdata cdata : wegingsdata) {%>
                 <tr>
-                    <td><%= cdata.getWeighingdate().toString()%></td>
+                    <td><a href="wegingServlet?action=deleteWeging&wID=<%=cdata.getId()%>"><span class="glyphicon glyphicon-remove"/></a></td>
+                    <td><%= sdf.format(cdata.getWeighingdate()) %></td>
                     <td><%= cdata.getWeight()%></td>
                     <td><%= cdata.getWaterpercentage()%></td>
                     <td><%= cdata.getFattymass()%></td>
@@ -73,62 +81,19 @@
                     <td><%= cdata.getCkalrest()%></td>
                     <td><%= cdata.getBmi()%></td>
                 </tr>
-                <% }%>
+                <% }}%>
             </table>
 
             <br />
 
             <div class="container">
-                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#formMeting">Nieuwe meting</button>
+                <a href="customerServlet?action=newweging"><button type="button" class="btn btn-info">Nieuwe meting</button></a>
                 <br />
-                <div id="formMeting" class="collapse in">
-                    collapse test.
-                </div>
-                    <form action="customerServlet?action=newWeging" class="form-horizontal" method="post">
-                        <div class="form-group">
-                            <label for="custdetWeighDate">Wegingsdatum:</label>
-                            <input type="date" name="custdetWeighDate">
-                        </div>
-                        <div class="form-group">
-                            <label for="custdetWeight">Gewicht</label>
-                            <input type="text" class="form-control" name="custdetWeight" required data-fv-notempty-message="This field is required">
-                        </div>
-                        <div class="form-group">
-                            <label for="custdetWater">Water%</label>
-                            <input type="text" class="form-control" name="custdetWater" required data-fv-notempty-message="This field is required">
-                        </div>
-                        <div class="form-group">
-                            <label for="custdetFatty">Vetmassa</label>
-                            <input type="text" class="form-control" name="custdetFatty" required data-fv-notempty-message="This field is required">
-                        </div>
-                        <div class="form-group">
-                            <label for="custdetMuscle">Spiermassa:</label>
-                            <input type="text" class="form-control" name="custdetMuscle" required data-fv-notempty-message="This field is required">
-                        </div>
-                        <div class="form-group">
-                            <label for="custdetViscFat">Visceraalvet:</label>
-                            <input type="text" class="form-control" name="custdetViscFat" required data-fv-notempty-message="This field is required">
-                        </div>
-                        <div class="form-group">
-                            <label for="custdetMetAge">Meta leeftijd:</label>
-                            <input type="text" class="form-control" name="custdetMetAge" required data-fv-notempty-message="This field is required">
-                        </div>
-                        <div class="form-group">
-                            <label for="custdetCkalRest">Ckal in rust:</label>
-                            <input type="text" class="form-control" name="custdetCkalRest" required data-fv-notempty-message="This field is required">
-                        </div>
-                        <div class="form-group">
-                            <label for="custdetBMI">BMI:</label>
-                            <input type="text" class="form-control" name="custdetBMI" required data-fv-notempty-message="This field is required">
-                        </div>
-                        <br />
-                        <div>
-                            <br />
-                            <button type="submit" class="btn btn-primary">Toevoegen</button>
-                        </div>
-                    </form>
-                </div>
             </div>
-            <div class="col-md-2"></div>
+            
+        </div>
+
+        <div class="col-md-2"></div>
+        <%@include file="../footer.jsp" %>
     </body>
 </html>

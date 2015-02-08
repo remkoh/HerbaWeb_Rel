@@ -10,6 +10,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <%
     BO.User loggedOnUser = ((BO.User) session.getAttribute("loggedOnUser"));
+    int aantalProducten = Integer.parseInt(session.getAttribute("numberofProducts").toString());
+    int aantalKlanten = Integer.parseInt(session.getAttribute("numberofCustomers").toString());
 %>
 <html>
     <head>
@@ -18,11 +20,21 @@
     </head>
     <body>
         <%@include file="navigation.jsp" %>
-        <h1>Hallo, <%= loggedOnUser.getFirstname()%></h1><br />
-        <div>
-            Debugging:<br/>
-            Firstrun: <%= firstrun%><br/>
-            loggedOn: <%= loggedOn%>
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="text-center"><h1>Hallo, <%= loggedOnUser.getFirstname()%></h1></div>
+            <br />
+            <br />
+            <div class="text-center">
+                <h3>Database informatie:</h3>
+            </div>
+            <br />
+            <div>
+                Er zijn momenteel <%= aantalProducten %> producten aanwezig in de database. <br />
+                Er zijn momenteel <%= aantalKlanten %> klanten aanwezig in de database. <br />
+            </div>
         </div>
+        <div class="col-md-2"></div>
+        <%@include file="footer.jsp" %>
     </body>
 </html>

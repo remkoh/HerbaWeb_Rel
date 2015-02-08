@@ -5,8 +5,11 @@
  */
 package Servlets;
 
+import BO.Customer;
+import Services.CustomerdataService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,17 +33,19 @@ public class wegingServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet wegingServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet wegingServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+        String action = request.getParameter("action").toString();
+        
+        RequestDispatcher dispatcher;
+        CustomerdataService cds = new CustomerdataService();
+        
+        if (action.equalsIgnoreCase("deleteWeging")) {
+          Long delID = Long.parseLong(request.getParameter("wID").toString());
+          Customer detCust = (Customer)request.getSession().getAttribute("detailCust");
+          cds.Delete(delID);
+          
+          dispatcher = request.getRequestDispatcher("customerServlet?action=details&id="+detCust.getId());
+            dispatcher.forward(request, response);
         }
     }
 

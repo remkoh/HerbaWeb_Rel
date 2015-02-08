@@ -12,8 +12,9 @@
 <script src="bootstrap-datepicker.js"></script>
 
 <% 
-    session.setAttribute("firstRun", "yes");
-    String firstrun = session.getAttribute("firstRun").toString();
+    session.setAttribute("loggedOn", 0);
+    //session.setAttribute("firstRun", "yes");
+    //String firstrun = session.getAttribute("firstRun").toString();
 %>
 <html>
     <head>
@@ -22,11 +23,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
+        <%@include file="navigation.jsp" %>
+        <%--
         <div class="navbar  navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">                </button>
-                    <a class="navbar-brand" href="index.html">Home</a>
+                    <a class="navbar-brand" href="index.jsp">Home</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -35,15 +38,16 @@
                 </div>
             </div>
         </div>
+        --%>
         <div>
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
-                    <div class="jumbotron text-center">Welkom op Herbaccountancy. Gelieve in te loggen aub!</div>
+                    <div class="jumbotron text-center"><h2>Welkom op Herbaccountancy.</h2><br /><h3> Gelieve in te loggen aub!</h3></div>
                     
                     <form action="loginServlet" method="post">
                         <input type="text" class="form-control" name="account" placeholder="geef account in"/><br/>
-                        <input type="text" class="form-control" name="password" placeholder="vul wachtwoord in"/><br/>
+                        <input type="password" class="form-control" name="password" placeholder="vul wachtwoord in"/><br/>
                         <br/>
                         <input type="submit" Value="Inloggen"/>
                     </form>
@@ -53,5 +57,6 @@
             </div>
 
         </div>
+        <%@include file="footer.jsp" %>
     </body>
 </html>
