@@ -49,6 +49,7 @@
             </table>
             <br />
             <a href="productcreateServlet?action=load"><button type="button" class="btn btn-primary btn-lg">Nieuw Product</button></a>
+        </div>
         <div class="col-md-2"></div>
         <%@include file="../footer.jsp" %>
     </body>

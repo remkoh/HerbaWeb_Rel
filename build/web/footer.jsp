@@ -1,11 +1,10 @@
-<%-- 
-    Document   : footer
-    Created on : Feb 8, 2015, 4:10:36 PM
-    Author     : Temp
---%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <div class="navbar navbar-fixed-bottom"><p class="navbar-text navbar-left">Programmeren 4 - Optie: Java</p><p class="navbar-text navbar-right">Made by: Remko Holtrust </p></div>
-</html>
+
+<link rel="stylesheet" href="footer.css">
+
+<div class="col-md-2"></div>
+<div class="footer col-md-8" id="footer">
+    <div class="text-center"><br />Programmeren 4 - Optie: Java - Made by: Remko Holtrust </div>
+</div>
+<div class="col-md-2"></div>
+

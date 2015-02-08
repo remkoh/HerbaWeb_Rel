@@ -97,6 +97,5 @@
             </form>
         </div>
         <div class="col-md-2"></div>
-        <%@include file="../footer.jsp" %>
     </body>
 </html>
