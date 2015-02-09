@@ -42,7 +42,7 @@
                     <td><%= cust.getEmail()%></td>
                     <td><%= cust.getAddressidId().getWoonplaatsidId().getCity()%></td>
                     <td><a href="customerServlet?action=details&id=<%=cust.getId()%>"><span class="glyphicon glyphicon-search"></span></a></td>   
-                    <td><a href="customerDelete?id=<%=cust.getId() %>" ><span class="glyphicon glyphicon-remove"></span></a></td>               
+                    <td><a href="customerDelete?id=<%=cust.getId() %>" ><span class="glyphicon glyphicon-remove"></span></a></td>        
                     <td><a href= "customerEditServlet?id=<%=cust.getId()%>"><span class="glyphicon glyphicon-pencil"></span></a></td>
 
                 </tr>
